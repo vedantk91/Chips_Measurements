@@ -1,0 +1,22 @@
+import matplotlib.pyplot as plt
+
+# Data (replace with your actual data from the CSV file)
+data = [0, 1, 2, 3, 4, 3, 2, 1, 0]
+
+# Function to generate step coordinates
+def generate_step_diagram(data):
+    x = [0]  # Initialize x-axis values
+    y = [data[0]]  # Initialize y-axis values with the first data point
+    for i in range(1, len(data)):
+        x.append(x[-1])  # Vertical line
+        y.append(data[i])
+        x.append(x[-1] + 1)  # Horizontal line
+        y.append(data[i])
+    return x, y
+
+# Generate the x and y coordinates
+x, y = generate_step_diagram(data)
+
+# Plot the step diagram
+plt.plot(x, y, drawstyle='steps-pre', color='black')
+plt.show()
