@@ -1,19 +1,20 @@
 #define SL_PIN 2       
 #define OUTFIN_PIN 5   
+#define ANALOG_PIN A0
 #define BIT_COUNT 8    
 #define READ_FREQ 100000  
 #define READ_DELAY (1000000 / READ_FREQ) 
 
-volatile bool resetData = false; // Flag to indicate reset
-volatile uint8_t data = 0;       // Shared variable to hold data
-uint8_t previousData = 0;        // Store the previous data value
-
+volatile bool resetData = false; 
+volatile uint8_t data = 0;       
+uint8_t previousData = 0;        
+uint8_t nextbit = 0;
 
 void setup() {
 
   pinMode(SL_PIN, INPUT);        
   pinMode(OUTFIN_PIN, INPUT);    
-  Serial.begin(115200);        
+  Serial.begin(9600);        
 
   for (int pin = 6; pin <= 13; pin++) {
     pinMode(pin, OUTPUT);
@@ -34,8 +35,18 @@ void loop() {
   if (digitalRead(SL_PIN) == LOW) {
     uint8_t tempData = 0;
 
+
+
     for (int i = 0; i < BIT_COUNT; i++) {
-      tempData |= digitalRead(OUTFIN_PIN); 
+      if(analogRead(ANALOG_PIN) > 185){
+      nextbit = 1;
+      }
+      else{
+      nextbit = 0;
+      }
+      //Serial.println(analogRead(ANALOG_PIN));
+      Serial.println(nextbit);
+      tempData |= nextbit; 
       if (i < BIT_COUNT - 1) {
         tempData <<= 1;       
       }
@@ -50,8 +61,7 @@ void loop() {
 
     data = tempData;
 
-    Serial.print("Decimal value of data: ");
-    Serial.println(data, DEC);
+    //Serial.println(data, DEC);
 }
 
 }
