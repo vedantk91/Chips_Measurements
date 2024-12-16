@@ -1,17 +1,17 @@
 from openpyxl import load_workbook, Workbook
 import matplotlib.pyplot as plt
 
-file_path = 'Recording2.xlsx'
+file_path = 'RecordingF3.xlsx'
 
 def read_data_from_csv(file_path):
     wb = load_workbook(file_path)
     ws = wb.active
     print(ws)
     data = []
-    for row in ws.iter_rows(min_row=1, max_col=1, values_only=True):
+    for row in ws.iter_rows(min_row=0, max_col=1, values_only=True):
         if row[0] is not None and row[0] < 256:  
             data.append(row[0])
-        if len(data) == 500:  
+        if len(data) == 100:  
             break
     return data
 

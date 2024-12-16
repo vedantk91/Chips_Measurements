@@ -1,7 +1,7 @@
 from openpyxl import load_workbook, Workbook
 import matplotlib.pyplot as plt
 
-file_path = 'Recording2.xlsx'
+file_path = 'Recording3.xlsx'
 
 def read_data_from_csv(file_path):
     wb = load_workbook(file_path)
@@ -11,7 +11,7 @@ def read_data_from_csv(file_path):
     for row in ws.iter_rows(min_row=1, max_col=1, values_only=True):
         if row[0] is not None and row[0] < 256:  
             data.append(row[0])
-        if len(data) == 100:  
+        if len(data) == 20:  
             break
     return data
 
